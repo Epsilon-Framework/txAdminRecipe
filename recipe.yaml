@@ -1,0 +1,38 @@
+$engine: 3
+$onesync: on
+name: EPSCore Basic
+version: 1.0.0
+author: MrFusiion
+description: Recipe for Complete RP Server For FiveM based on EPSCore.
+
+tasks: 
+  # Download default CFX resources
+  - action: download_github
+    src: https://github.com/citizenfx/cfx-server-data
+    ref: master
+    subpath: resources
+    dest: ./resources
+
+  # Download Base Files
+  - action: download_github
+    src: https://github.com/Epsilon-Framework/txAdminRecipe
+    ref: main
+    dest: ./tmp/eps
+
+  - action: move_path
+    src: ./tmp/eps/server.cfg
+    dest: ./server.cfg
+
+  - action: move_path
+    src: ./tmp/eps/Logo.png
+    dest: ./Logo.png
+
+  # Prepare Database
+  - action: connect_database
+  - action: query_database
+    file: ./tmp/eps/main.sql
+
+
+  # Clean up
+  - action: remove_path
+    path: ./tmp
